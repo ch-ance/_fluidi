@@ -94,12 +94,11 @@ export default function SignIn() {
           Please enter a user alias and a password to secure your account. Don't
           worry, we won't ever store your password anywhere.
         </DialogContentText>
-        <DialogContentText variant="overline" align="right">
-          How is this possible?
-        </DialogContentText>
         <DialogContentText align="right">
-          We use cryptographic hashes to generate a Bitcoin-like proof-of-work
-          cryptographic hash that is used to authenticate you.
+          How is this possible?
+          <br />
+          We use Bitcoin-like proof-of-work cryptographic hashes to authenticate
+          you, without your password ever leaving your device.
           <br />
           <Link className={classes.readMoreLink}>
             Here's some cartoons explaining how it works
