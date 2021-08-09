@@ -11,26 +11,25 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { DialogContentText } from "@material-ui/core";
+import {
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 import { useUser, useIsLoading } from "../context/CustomContext";
 import { useHistory } from "react-router-dom";
+import PageFooter from "./PageFooter";
 import gun from "../gun";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      <Link color="inherit" href="#">
-        Owned and distributed by The People.
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundColor: theme.palette.primary.main,
+    height: "100vh",
+    position: "absolute",
+    left: 0,
+  },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -45,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  readMoreLink: {
+    color: theme.palette.text.hint,
   },
 }));
 
@@ -65,6 +67,7 @@ export default function SignIn() {
         console.log(ack);
         user.auth(alias, pass, (ack) => {
           console.log(ack);
+          // window.location.reload();
         });
       });
     } catch (err) {
@@ -73,13 +76,37 @@ export default function SignIn() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container className={classes.container} component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography variant="h1" variant="h4">
+          fluidi
+        </Typography>
+
+        <DialogTitle>What is fluidi?</DialogTitle>
+        <DialogContentText align="center">
+          fluidi is a decentralized, peer to peer social media network that has
+          Audio at its core.{" "}
+          <Link className={classes.readMoreLink}>Read more here.</Link>
+        </DialogContentText>
+
+        <DialogContentText align="right">
+          Please enter a user alias and a password to secure your account. Don't
+          worry, we won't ever store your password anywhere.
+        </DialogContentText>
+        <DialogContentText variant="overline" align="right">
+          How is this possible?
+        </DialogContentText>
+        <DialogContentText align="right">
+          We use cryptographic hashes to generate a Bitcoin-like proof-of-work
+          cryptographic hash that is used to authenticate you.
+          <br />
+          <Link className={classes.readMoreLink}>
+            Here's some cartoons explaining how it works
+          </Link>
+        </DialogContentText>
+        <DialogContentText align="center"></DialogContentText>
+        <Typography component="h2" variant="h5">
           Create an Account
         </Typography>
         <form className={classes.form} noValidate>
@@ -118,15 +145,9 @@ export default function SignIn() {
           >
             Create Account
           </Button>
-          <DialogContentText align="right">
-            welcome to fluidi. please enter a user alias and a password to
-            secure your account.
-          </DialogContentText>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      <PageFooter />
     </Container>
   );
 }

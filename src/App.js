@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import { Typography } from "@material-ui/core";
 import SignInView from "./views/SignInView";
 import HomeView from "./views/HomeView";
 import FollowUserView from "./views/FollowUserView";
-import gun from "./gun";
+import ComposeDropletView from "./views/ComposeDropletView";
 import { useUser, useIsLoading } from "./context/CustomContext";
-import { useEffect } from "react";
-import { Typography } from "@material-ui/core";
+import gun from "./gun";
+import PageFooter from "./components/PageFooter";
 
 function App() {
   const { user, setUser } = useUser();
@@ -32,13 +33,16 @@ function App() {
           <Redirect to={user?.is ? "/home" : "/create-account"} />
         </Route>
         <Route exact path="/create-account">
-          <SignInView />
+          {user?.is ? <Redirect to="/home" /> : <SignInView />}
         </Route>
         <Route exact path="/home">
-          <HomeView />
+          {user?.is ? <HomeView /> : <Redirect to="/create-account" />}
         </Route>
         <Route exact path="/follow">
           <FollowUserView />
+        </Route>
+        <Route exact path="/create-droplet">
+          <ComposeDropletView />
         </Route>
         <Route path="/*">
           <Redirect to="/" />
